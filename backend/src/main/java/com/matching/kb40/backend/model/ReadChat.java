@@ -1,5 +1,7 @@
 package com.matching.kb40.backend.model;
 
+import org.apache.ibatis.type.Alias;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,11 +11,8 @@ import lombok.ToString;
 @Setter
 @ToString
 @NoArgsConstructor
-public class Chat {
-    private Long chatId;           // auto_increment
+@Alias("ReadChat")
+public class ReadChat {
     private Long matchId;
     private String userId;
-    private String content;
-    private String readFlag;
-    private String createdDate;
 }

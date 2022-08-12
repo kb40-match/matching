@@ -5,6 +5,10 @@ import com.sun.media.jfxmedia.logging.Logger;
 
 import io.swagger.annotations.ApiOperation;
 
+import java.io.IOException;
+
+import javax.websocket.EncodeException;
+
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,7 +22,6 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.matching.kb40.backend.dto.ChatDto;
-import com.matching.kb40.backend.model.Chat;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -27,13 +30,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Slf4j
 @RestController
 @RequestMapping("/chatting")
 public class ChattingController {
 	
-	@Autowired
+/* 	@Autowired
 	private ChattingService chattingService;
 
 	private final KafkaTemplate kafkaTemplate;
@@ -74,13 +78,5 @@ public class ChattingController {
 
     	
     	return new ResponseEntity<>(ChatDto, HttpStatus.OK);
-    }
-
-
-	@MessageMapping("sendMessage")
-	@SendTo("/topic/group")
-	public Message broadcastGroupMessage(@Payload Message message){
-
-	}
-	
+    } */
 }

@@ -13,15 +13,15 @@ import lombok.extern.slf4j.Slf4j;
 @Getter
 @Setter
 @ToString
-public class Topic {
-    private String topic;
+public class SocketReqMessage {
+    private String socketMessage;
 	private String delim;
-	private String a;
-	private String b;
+	private String topicType;
+	private String kafkaMessage;
 
-	public Topic(String topic, String delim) throws Exception {
+	public SocketReqMessage(String socketMessage, String delim) throws Exception {
 
-		this.topic = topic;
+		this.socketMessage = socketMessage;
 		if (delim == null) {
 			this.delim = "|";
 		} else {
@@ -29,22 +29,14 @@ public class Topic {
 		}
 		List<String> strToken = new ArrayList<String>();
 		try {
-			StringTokenizer tokenizer = new StringTokenizer(topic, delim);
+			StringTokenizer tokenizer = new StringTokenizer(socketMessage, delim);
 			while (tokenizer.hasMoreTokens()) {
 				strToken.add(tokenizer.nextToken());
 			}
+			this.topicType=strToken.get(0);
+			this.kafkaMessage=strToken.get(1);
 		} catch (Exception e) {
-			log.warn("Too Many Topic keyword : {}", topic);			
+			log.warn("Too Many Topic keyword : {}", socketMessage);			
 		}
-
-		/*
-		 * 
-		 * 예를 들면 아래와 같이 객체화 시킬 수 있다.
-		 * 
-		 * this.clientName 	= strToken.get(0);
-		 * this.callType 	= strToken.get(1);
-		 * this.carNumber 	= strToken.get(2);
-		 * 	
-		 */
 	}
 }

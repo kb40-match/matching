@@ -1,15 +1,11 @@
 package com.matching.kb40.backend.service;
 
-import org.springframework.kafka.annotation.KafkaListener;
-import org.springframework.transaction.annotation.Transactional;
-
-import com.matching.kb40.backend.model.Chatting;
-
+import org.springframework.kafka.support.Acknowledgment;
 
 public interface ChattingService {
 
-	public void  receiveAccount(String message, Acknowledgment ack); {
+	public void  receiveChat(String message, Acknowledgment ack) throws Exception;
 
-    public int transfer(AccountTransfer transfer);
+    public void  updateChat(String message, Acknowledgment ack) throws Exception;
 
 }
