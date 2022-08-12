@@ -13,10 +13,10 @@ public class QuestionDaoImpl implements QuestionDao{
 	String ns = "question.";
 
     @Autowired
-	SqlSessionTemplate SqlSessionTemplate;
+	SqlSessionTemplate sqlSessionTemplate;
 
 	@Override
 	public List<QuestionDto> retrieveAll() throws SQLException {
-		return SqlSessionTemplate.selectList(ns.concat("selectAll"));
+		return sqlSessionTemplate.selectList(ns.concat("selectAll"));
 	}
 }

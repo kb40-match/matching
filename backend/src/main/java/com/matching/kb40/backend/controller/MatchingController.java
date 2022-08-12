@@ -3,31 +3,35 @@ package com.matching.kb40.backend.controller;
 import com.matching.kb40.backend.dto.MatchDto;
 import com.matching.kb40.backend.service.MatchingService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.matching.kb40.backend.model.Matching;
+import org.springframework.web.bind.annotation.*;
 
 import lombok.extern.slf4j.Slf4j;
 
-import org.springframework.web.bind.annotation.GetMapping;
-
 @Slf4j
 @RestController
+@RequestMapping("/matching")
 public class MatchingController {
-	
+
 	@Autowired
 	private MatchingService matchingService;
 
-    @GetMapping("/matching")
-    public ResponseEntity<MatchDto> getMatchingSample() {
-		Matching matching = matchingService.matchingTest();
-    	log.info("Matching : {}", matching);
+    @PostMapping("/request")
+	public Boolean register(@RequestBody MatchDto match) throws Exception {
+		return matchingService.register(match);
+	}
 
-		MatchDto matchDto = new MatchDto();
-//		matchDto.setActiveFlag(matching.getSampleData());
-    	
-    	return new ResponseEntity<>(matchDto, HttpStatus.OK);
-    }
+	@PutMapping("/accept")
+	public Boolean modifyAccept(@RequestBody MatchDto match) throws Exception {
+		return matchingService.modifyAccept(match);
+	}
+
+	@PutMapping("/reject")
+	public Boolean modifyReject(@RequestBody MatchDto match) throws Exception {
+		return matchingService.modifyReject(match);
+	}
+
+	@PutMapping("/finish")
+	public Boolean modifyFinish(@RequestBody MatchDto match) throws Exception {
+		return matchingService.modifyFinish(match);
+	}
 }

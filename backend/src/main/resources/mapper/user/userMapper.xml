@@ -15,7 +15,7 @@
     </select>
 
     <update id="updateByUserId" parameterType="com.matching.kb40.backend.dto.UserDto">
-        UPDATE tb_user
+        UPDATE matching.tb_user
            SET job = #{job}
              , mbti_mind = #{mbtiMind}
              , mbti_recog = #{mbtiRecog}
@@ -33,7 +33,7 @@
     </update>
 
     <delete id="deleteByUserId">
-        DELETE FROM tb_user
+        DELETE FROM matching.tb_user
          WHERE user_id = #{userId}
     </delete>
 

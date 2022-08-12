@@ -1,22 +1,78 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!--
-       Copyright 2015-2019 the original author or authors.
-       Licensed under the Apache License, Version 2.0 (the "License");
-       you may not use this file except in compliance with the License.
-       You may obtain a copy of the License at
-          http://www.apache.org/licenses/LICENSE-2.0
-       Unless required by applicable law or agreed to in writing, software
-       distributed under the License is distributed on an "AS IS" BASIS,
-       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-       See the License for the specific language governing permissions and
-       limitations under the License.
--->
+
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="matching">
-    <select id="matchingTest" resultType="int">
-        SELECT
-         1
-        FROM
-         DUAL
+
+    <select id="selectCheckForInsert" parameterType="com.matching.kb40.backend.dto.MatchDto" resultType="int">
+        SELECT COUNT(*)
+          FROM matching.tb_match m
+         WHERE active_flag = '1'
+           AND (m.sender IN (#{receiver})
+                OR m.receiver IN (#{receiver}))
     </select>
+
+    <insert id="insertForRequest" parameterType="com.matching.kb40.backend.dto.MatchDto" useGeneratedKeys="true" keyProperty="matchId">
+        INSERT INTO matching.tb_match(sender, receiver, active_flag)
+        VALUES(#{sender}, #{receiver}, #{activeFlag})
+    </insert>
+
+    <select id="selectCheckForUpdate" parameterType="com.matching.kb40.backend.dto.MatchDto" resultType="int">
+        SELECT COUNT(*)
+          FROM matching.tb_match m
+         WHERE active_flag = '1'
+           AND (m.sender IN (#{sender})
+                OR m.receiver IN (#{sender}))
+    </select>
+
+    <update id="updateForAccept" parameterType="com.matching.kb40.backend.dto.MatchDto">
+        UPDATE matching.tb_match
+           SET active_flag = '1'
+         WHERE match_id = (SELECT sub_match.match_id
+                             FROM (SELECT match_id
+                                     FROM matching.tb_match
+                                    WHERE sender = #{sender}
+                                      AND receiver = #{receiver}
+                                      AND active_flag = '0'
+                                  ) sub_match
+                          )
+    </update>
+    
+    <update id="updateForOtherQuit" parameterType="com.matching.kb40.backend.dto.MatchDto">
+        UPDATE matching.tb_match m1, (SELECT sub_match.match_id
+                                        FROM (SELECT match_id
+                                                FROM matching.tb_match
+                                               WHERE active_flag = '0'
+                                                 AND (sender = #{sender}
+                                                      OR receiver = #{receiver})
+                                             ) sub_match
+                                     ) m2
+           SET m1.active_flag = '2'
+         WHERE m1.match_id = m2.match_id
+    </update>
+
+    <update id="updateForReject" parameterType="com.matching.kb40.backend.dto.MatchDto">
+        UPDATE matching.tb_match
+           SET active_flag = '2'
+         WHERE match_id = (SELECT sub_match.match_id
+                             FROM (SELECT match_id
+                                     FROM matching.tb_match
+                                    WHERE active_flag = '0'
+                                      AND sender = #{sender}
+                                      AND receiver = #{receiver}
+                                  ) sub_match
+                          )
+    </update>
+
+    <update id="updateForFinish" parameterType="com.matching.kb40.backend.dto.MatchDto">
+        UPDATE matching.tb_match
+           SET active_flag = '2'
+         WHERE match_id = (SELECT sub_match.match_id
+                             FROM (SELECT match_id
+                                     FROM matching.tb_match
+                                    WHERE active_flag = '1'
+                                      AND sender = #{sender}
+                                      AND receiver = #{receiver}
+                                  ) sub_match
+                          )
+    </update>
 </mapper>  

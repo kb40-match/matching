@@ -13,7 +13,7 @@ public interface UserDao {
     public List<UserDto> retrieveAll() throws SQLException;
 
 //    public UserDto insert() throws SQLException;
-//
+
     public void update(UserDto user) throws SQLException;
 
     public void delete(String userId) throws SQLException;
