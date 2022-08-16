@@ -34,6 +34,7 @@
              , agree_flag = #{agreeFlag}
              , hobby = #{hobby}
              , profile_filename = #{profileFilename}
+             , match_count = #{matchCount}
          WHERE user_id = #{userId}
     </update>
 

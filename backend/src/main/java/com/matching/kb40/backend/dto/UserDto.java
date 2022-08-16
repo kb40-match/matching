@@ -23,4 +23,5 @@ public class UserDto {
     private String agreeFlag;
     private String hobby;
     private String profileFilename;
+    private Integer matchCount;
 }
