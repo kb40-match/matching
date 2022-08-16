@@ -33,6 +33,6 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: kafka-server
+            name: kafka-client-server
             port: 
               number: 8083
