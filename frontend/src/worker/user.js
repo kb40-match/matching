@@ -12,7 +12,7 @@ export const fetchMyData = async (userId) => {
 };
 
 export const fetchResultFromAI = async (userId) => {
-  const response = await axios.get(`/user/${userId}`); // FIXME: change path
+  const response = await axios.get(`matching/result/${userId}`); // FIXME: change path
   return response.data;
 }
 

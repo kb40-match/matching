@@ -1,7 +1,7 @@
 <template>
     <div>
         <MenuBar page="MindQuestion" />
-        <v-dialog v-model="loading" fullscreen full-width>
+        <v-dialog v-model="loading" fullscreen>
             <v-container fluid fill-height style="background-color: rgba(255, 255, 255, 0.5);">
                 <v-layout justify-center align-center>
                 <v-progress-circular
@@ -44,7 +44,7 @@
 <script>
 import { useAppStore } from '../../store/userState'
 import { loadResultFromAI } from '../../worker/user';
-    import MenuBar from "../MenuBar.vue";
+import MenuBar from "../MenuBar.vue";
 
 export default {
     setup() {
@@ -82,7 +82,7 @@ export default {
             this.clickedLeft = false
             this.clickedRight = false
             if(this.b >= 3) {
-                // loadResultFromAI("user5")  // get 5 user and myData objects
+                loadResultFromAI("user5")  // get 5 user and myData objects
                 this.loading = true
 
                 setTimeout(() => {
@@ -101,7 +101,6 @@ export default {
                 .get(`/question/findAll`)
                 .then((response) => {
                     this.questionList = response.data
-                    console.log(response.data)
                     
                 })
                 .catch((err) => {

@@ -16,6 +16,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -81,6 +82,7 @@ public class MatchingServiceImpl implements MatchingService{
 	@Override
 	public List<MatchingResult> findResult(String userId) throws Exception {
 		List<MatchingResult> resultList = new LinkedList<>();
+		List<MatchingResult> result5 = new LinkedList<>();
 		MatchingResult userData = matchingDao.retrieveMatchingResult(userId);
 
 		// NOTE: you must manually set API_KEY below using information retrieved from your IBM Cloud account.
@@ -107,7 +109,7 @@ public class MatchingServiceImpl implements MatchingService{
 				jsonString.append(line);
 			}
 			// Scoring request
-			URL scoringUrl = new URL("https://us-south.ml.cloud.ibm.com/ml/v4/deployments/b7089601-fb9e-422e-b1f1-d7ea8dbba9a8/predictions?version=2022-08-15");
+			URL scoringUrl = new URL("https://us-south.ml.cloud.ibm.com/ml/v4/deployments/6af6d990-51d6-4d9a-858e-385262a1dc5a/predictions?version=2022-08-16");
 			String iam_token = "Bearer " + jsonString.toString().split(":")[1].split("\"")[1];
 			scoringConnection = (HttpURLConnection) scoringUrl.openConnection();
 			scoringConnection.setDoInput(true);
@@ -140,7 +142,7 @@ public class MatchingServiceImpl implements MatchingService{
 			value += "\"" + userData.getMbtiRecog() + "\"" + ",";
 			value += "\"" + userData.getMbtiJudge() + "\"" + ",";
 			value += "\"" + userData.getMbtiTactics() + "\"" + ",";
-			value += "\"" + "A" + "\"" + ",";
+			value += "\"" + "none" + "\"" + ",";
 			value += "\"" + userData.getProfileFilename() + "\"" + ",";
 			value += "\"" + "none" + "\"" + ",";
 			value += userData.getUserPoint() + ",";
@@ -177,30 +179,38 @@ public class MatchingServiceImpl implements MatchingService{
 
 			// ----- 데이터 가공 -----
 
+			Random rand = new Random();
+
+			int[] order = new int[5];
+
+			for(int i=0; i<order.length; i++) {
+				order[i] = rand.nextInt(10);
+
+				for(int j=0; j<i; j++) {
+					if(order[i] == order[j]) i--;
+				}
+			}
+
+			Arrays.sort(order);
+
 			userIDArray = userIDArray.substring(2, userIDArray.length() - 2);
 			String[] userIdList = userIDArray.split("\",\"");
 
 			similarityPerIDArray = similarityPerIDArray.substring(2, similarityPerIDArray.length() - 2);
 			String[] similarityPerList = similarityPerIDArray.split("\",\"");
 
-			Integer[] fitPercentList = new Integer[5];
-
-			Integer basePercent = 50;
-			Random random = new Random();
+			Integer[] fitPercentList = new Integer[10];
 
 			for(int i=0; i<similarityPerList.length; i++) {
-				fitPercentList[i] = (int)Math.round((1.0 - Double.parseDouble(similarityPerList[i]) / 200000) * 100) / 2 + 50;
-
-				if(fitPercentList[i] < 0) {
-					basePercent -= random.nextInt(10);
-					fitPercentList[i] = basePercent;
-				}
+				fitPercentList[i] = (int)Math.round((2.0 - Double.parseDouble(similarityPerList[i])) * 100);
 			}
 
-			for(int i=0; i<5; i++){
+			for(int i=0; i<10; i++){
 				resultList.add(matchingDao.retrieveMatchingResult(userIdList[i]));
 				resultList.get(i).setFitPercent(fitPercentList[i]);
 			}
+
+			for(int ord : order) result5.add(resultList.get(ord));
 
 		} catch (IOException e) {
 			System.out.println("The URL is not valid.");
@@ -221,6 +231,6 @@ public class MatchingServiceImpl implements MatchingService{
 			}
 		}
 
-		return resultList;
+		return result5;
 	}
 }

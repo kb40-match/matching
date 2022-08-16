@@ -22,8 +22,9 @@
                 <v-btn id="side-btn" text><v-icon large>mdi-chat</v-icon></v-btn>
              </div> -->
              <div style="margin:20px;">
+             <hr />
                 <h3><v-icon class="mr-2" color=black>mdi-face-man</v-icon>About</h3>
-                <div style="display:flex; margin-top:5px;">
+                <div style="display:flex; margin-top:5px;margin-bottom:20px;">
                     <div id="items" style="width:35%;">
                         <p>직업</p> 
                         <p>MBTI</p> 
@@ -45,12 +46,14 @@
                         <p>{{mydata.investProp}}</p>
                     </div>
                 </div>
-                <div style="margin-top:20px;">
+                <hr />
+                <div style="margin-top:10px;margin-bottom:20px;">
                     <h3><v-icon class="mr-2" color=black>mdi-heart-box-outline</v-icon>Interest</h3>
                     <div style="margin-top:5px; display:flex;" >
                         <v-chip class="mr-2" color="#7950f2" v-for="(value, index) in hobbies" :key="value"><span style="color:white">{{hobbies[index]}}</span></v-chip>
                     </div>
                 </div>
+                <hr />
              </div>
         </div>
     </v-container>

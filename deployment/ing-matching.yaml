@@ -29,3 +29,10 @@ spec:
             name: websocket-server
             port: 
               number: 8082
+      - path: /kafka-server
+        pathType: Prefix
+        backend:
+          service:
+            name: kafka-server
+            port: 
+              number: 8083

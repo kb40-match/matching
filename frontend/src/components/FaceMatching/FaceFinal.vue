@@ -73,6 +73,7 @@ export default {
             this.$router.push({name: 'MatchDetail', params: {user: this.user, mydata : this.mydata}})
         },
         reMatching() {
+            this.store.user.point -= 500 // decrease 500 point
             this.$router.push("/faceSelect").catch(() => {});
         },
         goChat(){

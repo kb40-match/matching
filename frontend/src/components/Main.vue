@@ -1,7 +1,15 @@
 <template>
-  <div>
+  <div v-if="this.store.user">
     <MenuBar page="Main" />
-      <div style="height:200px; background-color:#845ef7;"></div>
+      <div style="height:200px; background-color:#845ef7;padding:5px 15px 15px 15px;">
+        <div style="height:70%; padding:5px;text-align:center;">
+          <p style="font-size:30px;font-weight:bold;color:white"> {{addComma(this.store.user.userPoint)}} P</p>
+          <p style="font-size:25px;color:white">총 5회 매칭되었어요 !</p>
+        </div>
+        <div style="display:flex;justify-content:center;">
+          <v-btn id="main-btn" class="mr-5" @click="reInfo()">정보 재등록</v-btn> <v-btn id="main-btn" @click="rePrefernce()">성향 재파악</v-btn>
+        </div>
+      </div>
     <v-col>
       <v-row id="match" @click="goFaceMatching">
         <!-- <div style="width: 35%; display:flex;align-items: center; justify-content:center;"><img src="../assets/purpleheart.png" /></div> -->
@@ -35,14 +43,14 @@
         <v-col id="chat">
           <div class="d-flex mb-2" style="justify-content: center">
             <!-- <div style="width: 25px; height: 25px"></div> -->
-            <img id="img2" src="../assets/icons/chat.png" />
+            <img id="img2" src="../assets/icons/chat2.png" />
             <!-- <div id="chat-count">5</div> -->
           </div>
           <div style="font-size: 25px; font-weight: bold">대화하기</div>
         </v-col>
         <v-col id="service">
           <div class="d-flex mb-2" style="justify-content: center">
-            <img id="img2" src="../assets/icons/service.png" />
+            <img id="img2" src="../assets/icons/service2.png" />
           </div>
           <div style="font-size: 25px; font-weight: bold">사후서비스</div>
         </v-col>
@@ -69,12 +77,17 @@
 import SockJS from "sockjs-client";
 import Stomp from "webstomp-client";
 import MenuBar from "./MenuBar";
+import { useAppStore } from '../store/userState'
 
 export default {
   name: "Main",
   components:{
     MenuBar
   },
+  setup(){
+        const store = useAppStore()
+        return {store}
+    },
   data: () => ({}),
   methods: {
     goFaceMatching() {
@@ -82,6 +95,17 @@ export default {
     },
     goMindMatching() {
       this.$router.push("/mindQuestion").catch(() => {});
+    },
+    addComma(price) {
+            price = price + ""
+            var regexp = /\B(?=(\d{3})+(?!\d))/g
+            return price.toString().replace(regexp, ',')
+    },
+    reInfo(){
+      this.$router.push("/basicInfoList").catch(() => {});
+    },
+    rePrefernce(){
+      this.$router.push("/preferenceQuestion").catch(() => {});
     },
     testSocket() {
       // const sock = new SockJS("http://10.214.3.43:8081/match/chatWebSocket");
@@ -225,5 +249,17 @@ img {
   text-align: center;
   justify-content: center;
   /* padding-top: 13px;  */
+}
+
+#main-btn{
+  width:47%;
+  font-size:20px;
+  height:50px;
+  border-radius: 15px;
+  background-color:#f3f0ff;
+}
+
+p{
+  margin:0px !important;
 }
 </style>

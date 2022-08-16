@@ -37,7 +37,7 @@
     </v-navigation-drawer>
 
     <v-app-bar
-        v-if="user"
+        v-if="this.store.user"
         :clipped-left="$vuetify.breakpoint.lgAndUp"
         app
         color="#845ef7"

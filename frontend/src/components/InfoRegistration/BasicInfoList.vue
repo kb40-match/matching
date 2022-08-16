@@ -146,7 +146,7 @@ export default {
     border: 2px solid;
     border-radius: 20px;
     font-size:30px;
-    font-weight:bold;
+    /* font-weight:bold; */
     width:200px;
     margin-left:10px;
     background-color: #f3f0ff;
@@ -161,7 +161,7 @@ span{
     border: 2px solid;
     border-radius: 20px;
     font-size:30px;
-    font-weight:bold;
+    /* font-weight:bold; */
     padding:10px;
     margin-right:10px;
     width:250px;
