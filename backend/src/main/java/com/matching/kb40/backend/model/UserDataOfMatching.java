@@ -1,5 +1,6 @@
 package com.matching.kb40.backend.model;
 
+import io.swagger.models.auth.In;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -23,6 +24,7 @@ public class UserDataOfMatching {
     private String agreeFlag;
     private String hobby;
     private String profileFilename;
+    private Integer matchCount;
     private String activeFlag;
     private String createdDate;
 }

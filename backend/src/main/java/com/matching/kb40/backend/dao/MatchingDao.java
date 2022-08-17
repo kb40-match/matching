@@ -10,6 +10,8 @@ import java.util.List;
 public interface MatchingDao {
     public Integer checkForInsert(MatchDto match) throws SQLException;
 
+    public Integer checkForInsert2(MatchDto match) throws SQLException;
+
     public void insertForRequest(MatchDto match) throws SQLException;
 
     public Integer checkForUpdate(MatchDto match) throws SQLException;

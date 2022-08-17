@@ -30,7 +30,11 @@ public class MatchingServiceImpl implements MatchingService{
 
 	@Override
 	public Boolean register(MatchDto match) throws Exception {
-		if(matchingDao.checkForInsert(match) > 0) {
+		if(matchingDao.checkForInsert2(match) > 0){
+			// 요청자(sender)가 상대(receiver)에게 중복요청을 함
+			return false;
+		}
+		else if(matchingDao.checkForInsert(match) > 0) {
 			// 상대(receiver)가 이미 대화중
 			return false;
 		}

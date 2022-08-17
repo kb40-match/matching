@@ -22,6 +22,11 @@ public class MatchingDaoImpl implements MatchingDao{
 	}
 
 	@Override
+	public Integer checkForInsert2(MatchDto match) throws SQLException {
+		return sqlSessionTemplate.selectOne(ns.concat("selectCheckForInsert2"), match);
+	}
+
+	@Override
 	public void insertForRequest(MatchDto match) throws SQLException {
 		sqlSessionTemplate.insert(ns.concat("insertForRequest"), match);
 	}
