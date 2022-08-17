@@ -237,4 +237,16 @@ public class MatchingServiceImpl implements MatchingService{
 
 		return result5;
 	}
+
+	@Override
+	public String findMatchId(String userId) throws Exception {
+		String matchId = matchingDao.retrieveMatchId(userId);
+
+		if(matchId == null) {
+			return "false";
+		}
+		else {
+			return matchId;
+		}
+	}
 }

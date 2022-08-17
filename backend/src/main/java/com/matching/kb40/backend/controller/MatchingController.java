@@ -53,4 +53,9 @@ public class MatchingController {
 	public List<MatchingResult> findResult(@PathVariable String userId) throws Exception {
 		return matchingService.findResult(userId);
 	}
+
+	@GetMapping("/matchId/{userId}")
+	public String findMatchId(@PathVariable String userId) throws Exception {
+		return matchingService.findMatchId(userId);
+	}
 }

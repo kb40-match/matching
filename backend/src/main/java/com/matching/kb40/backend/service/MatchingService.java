@@ -21,4 +21,6 @@ public interface MatchingService {
     public List<UserDataOfMatching> findSender(String receiverId) throws Exception;
 
     public List<MatchingResult> findResult(String userId) throws Exception;
+
+    public String findMatchId(String userId) throws Exception;
 }

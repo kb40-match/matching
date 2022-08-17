@@ -29,4 +29,6 @@ public interface MatchingDao {
     public List<UserDataOfMatching> retrieveSender(String receiverId) throws SQLException;
 
     public MatchingResult retrieveMatchingResult(String userId) throws SQLException;
+
+    public String retrieveMatchId(String userId) throws SQLException;
 }

@@ -129,4 +129,12 @@
           FROM matching.tb_user u LEFT JOIN matching.tb_mydata m ON u.mydata_id = m.mydata_id
          WHERE u.user_id = #{userId}
     </select>
+
+    <select id="selectMatchIdByUserId" resultType="String">
+        SELECT m.match_id
+          FROM matching.tb_match m
+         WHERE m.active_flag = '1'
+           AND(m.sender = #{userId}
+               OR m.receiver = #{userId})
+    </select>
 </mapper>  
