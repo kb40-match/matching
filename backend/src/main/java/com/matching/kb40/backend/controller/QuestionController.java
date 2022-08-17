@@ -10,6 +10,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
+@CrossOrigin(origins = "http://matching.kbfg.kubepia.com")
 @RequestMapping("/question")
 public class QuestionController {
 
