@@ -186,10 +186,10 @@ public class MatchingServiceImpl implements MatchingService{
 
 			Random rand = new Random();
 
-			int[] order = new int[5];
+			int[] order = new int[4];
 
 			for(int i=0; i<order.length; i++) {
-				order[i] = rand.nextInt(10);
+				order[i] = rand.nextInt(9) + 1;
 
 				for(int j=0; j<i; j++) {
 					if(order[i] == order[j]) i--;
@@ -229,6 +229,7 @@ public class MatchingServiceImpl implements MatchingService{
 				}
 			}
 
+			result5.add(resultList.get(0));
 			for(int ord : order) result5.add(resultList.get(ord));
 
 		} catch (IOException e) {
