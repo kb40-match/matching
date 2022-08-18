@@ -4,6 +4,7 @@ import com.matching.kb40.backend.dao.MatchingDao;
 import com.matching.kb40.backend.dto.MatchDto;
 import com.matching.kb40.backend.model.MatchingResult;
 import com.matching.kb40.backend.model.UserDataOfMatching;
+import io.swagger.models.auth.In;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -205,13 +206,23 @@ public class MatchingServiceImpl implements MatchingService{
 
 			Integer[] fitPercentList = new Integer[10];
 
+
 			for(int i=0; i<similarityPerList.length; i++) {
 				fitPercentList[i] = (int)Math.round((2.0 - Double.parseDouble(similarityPerList[i])) * 100);
 			}
 
+			Integer base = 0;
+			if(fitPercentList[9] < 0) base = fitPercentList[9] * -1;
+
 			for(int i=0; i<10; i++){
 				resultList.add(matchingDao.retrieveMatchingResult(userIdList[i]));
-				resultList.get(i).setFitPercent(fitPercentList[i]);
+
+				if(fitPercentList[i] + base > 100 ) {
+					resultList.get(i).setFitPercent(100);
+				}
+				else {
+					resultList.get(i).setFitPercent(fitPercentList[i] + base);
+				}
 			}
 
 			for(int ord : order) result5.add(resultList.get(ord));
