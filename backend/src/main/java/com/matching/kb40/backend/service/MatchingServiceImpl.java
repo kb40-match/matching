@@ -212,16 +212,20 @@ public class MatchingServiceImpl implements MatchingService{
 			}
 
 			Integer base = 0;
-			if(fitPercentList[9] < 0) base = fitPercentList[9] * -1;
+			if(fitPercentList[9] < 0) {
+				base = (fitPercentList[9] * -1);
+			}
 
 			for(int i=0; i<10; i++){
 				resultList.add(matchingDao.retrieveMatchingResult(userIdList[i]));
 
-				if(fitPercentList[i] + base > 100 ) {
+				Integer avgValue = (fitPercentList[i]+ base) / 2 + 50;
+
+				if(avgValue > 100) {
 					resultList.get(i).setFitPercent(100);
 				}
 				else {
-					resultList.get(i).setFitPercent(fitPercentList[i] + base);
+					resultList.get(i).setFitPercent(avgValue);
 				}
 			}
 
