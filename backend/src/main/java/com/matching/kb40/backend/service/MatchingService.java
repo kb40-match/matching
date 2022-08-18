@@ -23,4 +23,6 @@ public interface MatchingService {
     public List<MatchingResult> findResult(String userId) throws Exception;
 
     public String findMatchId(String userId) throws Exception;
+
+    public MatchDto findMatch(String userId) throws Exception;
 }

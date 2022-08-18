@@ -137,4 +137,12 @@
            AND(m.sender = #{userId}
                OR m.receiver = #{userId})
     </select>
+
+    <select id="selectMatchByUserId" resultType="com.matching.kb40.backend.dto.MatchDto">
+        SELECT *
+          FROM matching.tb_match m
+         WHERE m.active_flag = '1'
+           AND (m.sender = #{userId}
+                OR m.receiver = #{userId})
+    </select>
 </mapper>  

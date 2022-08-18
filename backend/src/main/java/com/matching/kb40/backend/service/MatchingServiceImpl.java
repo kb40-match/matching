@@ -264,4 +264,9 @@ public class MatchingServiceImpl implements MatchingService{
 			return matchId;
 		}
 	}
+
+	@Override
+	public MatchDto findMatch(String userId) throws Exception {
+		return matchingDao.retrieveMatch(userId);
+	}
 }

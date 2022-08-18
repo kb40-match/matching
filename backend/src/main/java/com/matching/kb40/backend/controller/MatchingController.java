@@ -59,4 +59,10 @@ public class MatchingController {
 	public String findMatchId(@PathVariable String userId) throws Exception {
 		return matchingService.findMatchId(userId);
 	}
+
+	@GetMapping("/match/{userId}")
+	public MatchDto findMatch(@PathVariable String userId) throws Exception {
+		return matchingService.findMatch(userId);
+	}
+
 }

@@ -75,4 +75,9 @@ public class MatchingDaoImpl implements MatchingDao{
 	public String retrieveMatchId(String userId) throws SQLException {
 		return sqlSessionTemplate.selectOne(ns.concat("selectMatchIdByUserId"), userId);
 	}
+
+	@Override
+	public MatchDto retrieveMatch(String userId) throws SQLException {
+		return sqlSessionTemplate.selectOne(ns.concat("selectMatchByUserId"), userId);
+	}
 }
